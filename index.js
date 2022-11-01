@@ -19,6 +19,7 @@ const promptList = () => {
             {
                 type: "list",
                 name: "userAction",
+                message: "What would you like to do?",
                 choices: [
                     "View all departments",
                     "View all roles",
@@ -62,6 +63,7 @@ const viewDepartments = () => {
         }
         else {
             console.log(results);
+            promptList();    
         }
     });
 }
@@ -73,6 +75,7 @@ const viewRoles = () => {
         }
         else {
             console.log(results);
+            promptList(); 
         }
     });
 }
@@ -84,6 +87,19 @@ const viewEmployees = () => {
         }
         else {
             console.log(results);
+            promptList(); 
         }
     });
+}
+
+const addDepartment = () => {
+    
+}
+
+const addRole = () => {
+
+}
+
+const addEmployee = () => {
+
 }
