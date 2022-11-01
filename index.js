@@ -94,7 +94,7 @@ const addDepartment = () => {
 		])
 		.then((answers) => {
 			db.query(
-				`INSERT INTO department(name) VALUE ${answers.departmentName}`,
+				`INSERT INTO department(name) VALUES ${answers.departmentName}`,
 				(err, results) => {
 					if (err) {
 						console.log(err);
@@ -107,6 +107,33 @@ const addDepartment = () => {
 		});
 };
 
-const addRole = () => {};
+const addRole = () => {
+    return inquirer
+		.prompt([
+			{
+				type: "input",
+				name: "roleName",
+				message: "What role would you like to add?",
+			},
+            {
+                type: "input",
+                name: "roleSalary",
+                message: "What is the role's salary?",
+            },
+		])
+		.then((answers) => {
+			db.query(
+				`INSERT INTO role(title, salary) VALUES (${answers.roleName}), (${answers.roleSalary})`,
+				(err, results) => {
+					if (err) {
+						console.log(err);
+					} else {
+						console.log(results);
+						promptList();
+					}
+				}
+			);
+		});
+};
 
 const addEmployee = () => {};
