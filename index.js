@@ -136,4 +136,36 @@ const addRole = () => {
 		});
 };
 
-const addEmployee = () => {};
+const addEmployee = () => {
+    return inquirer
+		.prompt([
+			{
+				type: "input",
+				name: "employeeFirstName",
+				message: "What is the employee's first name?",
+			},
+            {
+                type: "input",
+                name: "employeeLastName",
+                message: "What is the employee's last name?",
+            },
+            {
+                type: "input",
+                name: "employeeManagerId",
+                message: "What is the employee's manager's id?",
+            },
+		])
+		.then((answers) => {
+			db.query(
+				`INSERT INTO employee(first_name, last_name, manager_id) VALUES (${answers.employeeFirstName}), (${answers.employeeLastName}), (${answers.employeeManagerId})`,
+				(err, results) => {
+					if (err) {
+						console.log(err);
+					} else {
+						console.log(results);
+						promptList();
+					}
+				}
+			);
+		});
+};
