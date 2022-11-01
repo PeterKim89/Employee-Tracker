@@ -66,3 +66,14 @@ const viewDepartments = () => {
     });
 }
 
+const viewRoles = () => {
+    db.query("SELECT * FROM role", (err, results) => {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            console.log(results);
+        }
+    });
+}
+
