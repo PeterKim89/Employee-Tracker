@@ -77,3 +77,13 @@ const viewRoles = () => {
     });
 }
 
+const viewEmployees = () => {
+    db.query("SELECT * FROM employee", (err, results) => {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            console.log(results);
+        }
+    });
+}
