@@ -30,4 +30,27 @@ const promptList = () => {
                 ],
             }
         ])
+        .then (answers => {
+            if (answers.userAction === "View all departments") {
+                viewDepartments();
+            }
+            else if (answers.userAction === "View all roles") {
+                viewRoles();
+            }
+            else if (answers.userAction === "View all employees") {
+                viewEmployees();
+            }
+            else if (answers.userAction === "Add a department") {
+                addDepartment();
+            }
+            else if (answers.userAction === "Add a role") {
+                addRole();
+            }
+            else if (answers.userAction === "Add an employee") {
+                addEmployee();
+            }
+            else if (answers.userAction === "Update an employee role") {
+                updateEmployeeRole();
+            }
+        })
 }
