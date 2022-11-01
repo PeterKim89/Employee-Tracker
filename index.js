@@ -54,3 +54,15 @@ const promptList = () => {
             }
         })
 }
+
+const viewDepartments = () => {
+    db.query("SELECT * FROM department", (err, results) => {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            console.log(results);
+        }
+    });
+}
+
