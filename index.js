@@ -141,7 +141,7 @@ const addRole = () => {
 		])
 		.then((answers) => {
 			db.query(
-				`INSERT INTO role(title, salary, department_id) VALUES (${answers.roleName}), (${answers.roleSalary}), (${answers.departmentId})`,
+				`INSERT INTO role (title, salary, department_id) VALUES ('${answers.roleName}', ${answers.roleSalary}, ${answers.departmentId})`,
 				(err, results) => {
 					if (err) {
 						console.log(err);
