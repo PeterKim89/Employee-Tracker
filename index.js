@@ -176,11 +176,12 @@ const addEmployee = () => {
 				type: "input",
 				name: "employeeManagerId",
 				message: "What is the employee's manager's id? (if applicable)",
+                default: "null",
 			},
 		])
 		.then((answers) => {
 			db.query(
-				`INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES (${answers.employeeFirstName}), (${answers.employeeLastName}), (${answers.employeeRoleId}), (${answers.employeeManagerId})`,
+				`INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES ('${answers.employeeFirstName}', '${answers.employeeLastName}', ${answers.employeeRoleId}, ${answers.employeeManagerId})`,
 				(err, results) => {
 					if (err) {
 						console.log(err);
