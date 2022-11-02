@@ -13,14 +13,15 @@ const db = mysql.createConnection(
 	console.log("Connected to Employees_db")
 );
 
-db.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected!");
-    promptList();
-})
+db.connect(function (err) {
+	if (err) throw err;
+	console.log("Connected!");
+	promptList();
+});
 
 const promptList = () => {
-	return inquirer.prompt([
+	return inquirer
+		.prompt([
 			{
 				type: "list",
 				name: "userAction",
@@ -39,31 +40,25 @@ const promptList = () => {
 		.then((answers) => {
 			if (answers.userAction === "View all departments") {
 				viewDepartments();
-                console.log(1)
-			} 
-            else if (answers.userAction === "View all roles") {
+				console.log(1);
+			} else if (answers.userAction === "View all roles") {
 				viewRoles();
-                console.log(2)
-			}
-            else if (answers.userAction === "View all employees") {
+				console.log(2);
+			} else if (answers.userAction === "View all employees") {
 				viewEmployees();
-                console.log(3)
-			} 
-            else if (answers.userAction === "Add a department") {
+				console.log(3);
+			} else if (answers.userAction === "Add a department") {
 				addDepartment();
-                console.log(4)
-			} 
-            else if (answers.userAction === "Add a role") {
+				console.log(4);
+			} else if (answers.userAction === "Add a role") {
 				addRole();
-                console.log(5)
-			} 
-            else if (answers.userAction === "Add an employee") {
+				console.log(5);
+			} else if (answers.userAction === "Add an employee") {
 				addEmployee();
-                console.log(6)
-			} 
-            else if (answers.userAction === "Update an employee role") {
+				console.log(6);
+			} else if (answers.userAction === "Update an employee role") {
 				updateEmployeeRole();
-                console.log(7)
+				console.log(7);
 			}
 		});
 };
@@ -84,7 +79,7 @@ const viewRoles = () => {
 		if (err) {
 			console.log(err);
 		} else {
-			console.log(results);
+			console.table(results);
 			promptList();
 		}
 	});
@@ -95,7 +90,7 @@ const viewEmployees = () => {
 		if (err) {
 			console.log(err);
 		} else {
-			console.log(results);
+			console.table(results);
 			promptList();
 		}
 	});
@@ -126,23 +121,23 @@ const addDepartment = () => {
 };
 
 const addRole = () => {
-    return inquirer
+	return inquirer
 		.prompt([
 			{
 				type: "input",
 				name: "roleName",
 				message: "What role would you like to add?",
 			},
-            {
-                type: "input",
-                name: "roleSalary",
-                message: "What is the role's salary?",
-            },
-            {
-                type: "input",
-                name: "departmentId",
-                message: "What is the role's department id number?"
-            }
+			{
+				type: "input",
+				name: "roleSalary",
+				message: "What is the role's salary?",
+			},
+			{
+				type: "input",
+				name: "departmentId",
+				message: "What is the role's department id number?",
+			},
 		])
 		.then((answers) => {
 			db.query(
@@ -160,28 +155,28 @@ const addRole = () => {
 };
 
 const addEmployee = () => {
-    return inquirer
+	return inquirer
 		.prompt([
 			{
 				type: "input",
 				name: "employeeFirstName",
 				message: "What is the employee's first name?",
 			},
-            {
-                type: "input",
-                name: "employeeLastName",
-                message: "What is the employee's last name?",
-            },
-            {
-                type: "input",
-                name: "employeeRoleId",
-                message: "What is the employee's role id number?"
-            },
-            {
-                type: "input",
-                name: "employeeManagerId",
-                message: "What is the employee's manager's id? (if applicable)",
-            },
+			{
+				type: "input",
+				name: "employeeLastName",
+				message: "What is the employee's last name?",
+			},
+			{
+				type: "input",
+				name: "employeeRoleId",
+				message: "What is the employee's role id number?",
+			},
+			{
+				type: "input",
+				name: "employeeManagerId",
+				message: "What is the employee's manager's id? (if applicable)",
+			},
 		])
 		.then((answers) => {
 			db.query(
@@ -198,12 +193,26 @@ const addEmployee = () => {
 		});
 };
 
-// const updateEmployeeRole = () => {
+const updateEmployeeRole = () => {
+	let queryEmployeeList;
+	db.query("SELECT * FROM employee", (err, results) => {
+		if (err) {
+			console.log(err);
+		} else {
+			queryEmployeeList = results.map(({ first_name, last_name }) => ({
+				employeeName: first_name + " " + last_name,
+			}));
+		}
+	});
 
-// }
-
-// const init = async () => {
-//     await promptList();
-// }
-
-// init();
+	inquirer
+		.prompt([
+			{
+				type: "input",
+				name: "targetEmployee",
+				message: "Which employee would you like to update?",
+				choices: queryEmployeeList,
+			},
+		])
+		.then();
+};
