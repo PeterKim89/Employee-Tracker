@@ -208,11 +208,34 @@ const updateEmployeeRole = () => {
 	inquirer
 		.prompt([
 			{
-				type: "input",
+				type: "list",
 				name: "targetEmployee",
 				message: "Which employee would you like to update?",
 				choices: queryEmployeeList,
 			},
 		])
-		.then();
+		.then(targetEmployee => {
+            let queryRolesList;
+            db.query("SELECT * FROM role", (err, result) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    queryRolesList = results.map(({title}) => ({
+                        roleTitle: title,
+                    }));
+                }
+            })
+            inquirer
+		        .prompt([
+                    {
+                        type: "list",
+                        name: "newRole",
+                        message: "What new role would you like to give the employee?",
+                        choices: queryRolesList,
+                    },
+            ])
+            .then (newRole => {
+                
+            })
+        });
 };
