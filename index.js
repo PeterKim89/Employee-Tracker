@@ -107,7 +107,7 @@ const addDepartment = () => {
 		])
 		.then((answers) => {
 			db.query(
-				`INSERT INTO department(name) VALUES ${answers.departmentName}`,
+				`INSERT INTO department (name) VALUES ('${answers.departmentName}')`,
 				(err, results) => {
 					if (err) {
 						console.log(err);
