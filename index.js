@@ -34,32 +34,28 @@ const promptList = () => {
 					"Add a role",
 					"Add an employee",
 					"Update an employee role",
+                    "Exit",
 				],
 			},
 		])
 		.then((answers) => {
 			if (answers.userAction === "View all departments") {
 				viewDepartments();
-				console.log(1);
 			} else if (answers.userAction === "View all roles") {
 				viewRoles();
-				console.log(2);
 			} else if (answers.userAction === "View all employees") {
 				viewEmployees();
-				console.log(3);
 			} else if (answers.userAction === "Add a department") {
 				addDepartment();
-				console.log(4);
 			} else if (answers.userAction === "Add a role") {
 				addRole();
-				console.log(5);
 			} else if (answers.userAction === "Add an employee") {
 				addEmployee();
-				console.log(6);
 			} else if (answers.userAction === "Update an employee role") {
 				updateEmployeeRole();
-				console.log(7);
-			}
+			} else if (answers.userAction === "Exit") {
+                db.end();
+            }
 		});
 };
 
