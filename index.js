@@ -141,7 +141,7 @@ const addRole = () => {
 		])
 		.then((answers) => {
 			db.query(
-				`INSERT INTO role(title, salary) VALUES (${answers.roleName}), (${answers.roleSalary}), (${answers.departmentId})`,
+				`INSERT INTO role(title, salary, department_id) VALUES (${answers.roleName}), (${answers.roleSalary}), (${answers.departmentId})`,
 				(err, results) => {
 					if (err) {
 						console.log(err);
@@ -180,7 +180,7 @@ const addEmployee = () => {
 		])
 		.then((answers) => {
 			db.query(
-				`INSERT INTO employee(first_name, last_name, manager_id) VALUES (${answers.employeeFirstName}), (${answers.employeeLastName}), (${answers.employeeManagerId})`,
+				`INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES (${answers.employeeFirstName}), (${answers.employeeLastName}), (${answers.employeeRoleId}), (${answers.employeeManagerId})`,
 				(err, results) => {
 					if (err) {
 						console.log(err);
