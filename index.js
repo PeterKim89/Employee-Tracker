@@ -13,12 +13,14 @@ const db = mysql.createConnection(
 	console.log("Connected to Employees_db")
 );
 
+// initalizes mysql connection and the inquirer prompt
 db.connect(function (err) {
 	if (err) throw err;
 	console.log("Connected!");
 	promptList();
 });
 
+// list of inquirer prompt choices and associated function calls
 const promptList = () => {
 	return inquirer
 		.prompt([
@@ -34,7 +36,7 @@ const promptList = () => {
 					"Add a role",
 					"Add an employee",
 					"Update an employee role",
-                    "Exit",
+					"Exit",
 				],
 			},
 		])
@@ -54,11 +56,12 @@ const promptList = () => {
 			} else if (answers.userAction === "Update an employee role") {
 				updateEmployeeRole();
 			} else if (answers.userAction === "Exit") {
-                db.end();
-            }
+				db.end();
+			}
 		});
 };
 
+// displays a table with all content from department table
 const viewDepartments = () => {
 	db.query("SELECT * FROM department", (err, results) => {
 		if (err) {
@@ -70,6 +73,7 @@ const viewDepartments = () => {
 	});
 };
 
+// displays a table with all content from role table
 const viewRoles = () => {
 	db.query("SELECT * FROM role", (err, results) => {
 		if (err) {
@@ -81,8 +85,9 @@ const viewRoles = () => {
 	});
 };
 
+// displays a table with all content from employees table
 const viewEmployees = () => {
-	db.query("SELECT * FROM employee", (err, results) => {
+	db.query("SELECT employee.id, employee.first_name, employee.last_name, employee.role_id, role.title, department.name AS department, role.salary, CONCAT (manager.first_name, ' ', manager.last_name) AS manager FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id LEFT JOIN employee manager ON employee.manager_id = manager.id", (err, results) => {
 		if (err) {
 			console.log(err);
 		} else {
@@ -92,6 +97,7 @@ const viewEmployees = () => {
 	});
 };
 
+// inserts a new row into department table
 const addDepartment = () => {
 	return inquirer
 		.prompt([
@@ -116,6 +122,7 @@ const addDepartment = () => {
 		});
 };
 
+// inserts a new row into role table
 const addRole = () => {
 	return inquirer
 		.prompt([
@@ -150,6 +157,7 @@ const addRole = () => {
 		});
 };
 
+// inserts a new row into employee table
 const addEmployee = () => {
 	return inquirer
 		.prompt([
@@ -172,7 +180,7 @@ const addEmployee = () => {
 				type: "input",
 				name: "employeeManagerId",
 				message: "What is the employee's manager's id? (if applicable)",
-                default: "null",
+				default: "null",
 			},
 		])
 		.then((answers) => {
@@ -190,18 +198,16 @@ const addEmployee = () => {
 		});
 };
 
+// updates an employee's role inside the employee table
 const updateEmployeeRole = () => {
-	let queryEmployeeList;
 	db.query("SELECT * FROM employee", (err, results) => {
 		if (err) {
 			console.log(err);
-		} else {
-			queryEmployeeList = results.map(({ id, first_name, last_name }) => ({
-				id: id,
-				employeeName: first_name + " " + last_name,
-			}));
 		}
-	});
+		const queryEmployeeList = results.map(({ id, first_name, last_name }) => ({
+			id: id,
+			employeeName: first_name + " " + last_name,
+		}));
 
 	inquirer
 		.prompt([
@@ -212,7 +218,8 @@ const updateEmployeeRole = () => {
 				choices: queryEmployeeList,
 			},
 		])
-		.then((targetEmployee) => {
+	})
+		.then((results) => {
 			let queryRolesList;
 			db.query("SELECT * FROM role", (err, result) => {
 				if (err) {
@@ -247,4 +254,5 @@ const updateEmployeeRole = () => {
 					);
 				});
 		});
+	
 };
