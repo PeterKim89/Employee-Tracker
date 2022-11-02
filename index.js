@@ -138,10 +138,15 @@ const addRole = () => {
                 name: "roleSalary",
                 message: "What is the role's salary?",
             },
+            {
+                type: "input",
+                name: "departmentId",
+                message: "What is the role's department id number?"
+            }
 		])
 		.then((answers) => {
 			db.query(
-				`INSERT INTO role(title, salary) VALUES (${answers.roleName}), (${answers.roleSalary})`,
+				`INSERT INTO role(title, salary) VALUES (${answers.roleName}), (${answers.roleSalary}), (${answers.departmentId})`,
 				(err, results) => {
 					if (err) {
 						console.log(err);
@@ -169,8 +174,13 @@ const addEmployee = () => {
             },
             {
                 type: "input",
+                name: "employeeRoleId",
+                message: "What is the employee's role id number?"
+            },
+            {
+                type: "input",
                 name: "employeeManagerId",
-                message: "What is the employee's manager's id?",
+                message: "What is the employee's manager's id? (if applicable)",
             },
 		])
 		.then((answers) => {
