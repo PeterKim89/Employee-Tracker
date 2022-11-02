@@ -114,7 +114,7 @@ const addDepartment = () => {
 					if (err) {
 						console.log(err);
 					} else {
-						console.log(results);
+						console.log("Department has been added!");
 						promptList();
 					}
 				}
@@ -149,7 +149,7 @@ const addRole = () => {
 					if (err) {
 						console.log(err);
 					} else {
-						console.log(results);
+						console.log("Role has been added!");
 						promptList();
 					}
 				}
@@ -190,7 +190,7 @@ const addEmployee = () => {
 					if (err) {
 						console.log(err);
 					} else {
-						console.log(results);
+						console.log("Employee has been added!");
 						promptList();
 					}
 				}
@@ -199,6 +199,7 @@ const addEmployee = () => {
 };
 
 // updates an employee's role inside the employee table
+// currently runs into promise errors
 const updateEmployeeRole = () => {
 	db.query("SELECT * FROM employee", (err, results) => {
 		if (err) {
