@@ -75,7 +75,7 @@ const viewDepartments = () => {
 
 // displays a table with all content from role table
 const viewRoles = () => {
-	db.query("SELECT * FROM role", (err, results) => {
+	db.query("SELECT role.title, role.salary, role.department_id, department.name AS department FROM role INNER JOIN department ON role.department_id = department.id", (err, results) => {
 		if (err) {
 			console.log(err);
 		} else {
