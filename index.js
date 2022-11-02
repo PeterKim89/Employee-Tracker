@@ -199,7 +199,8 @@ const updateEmployeeRole = () => {
 		if (err) {
 			console.log(err);
 		} else {
-			queryEmployeeList = results.map(({ first_name, last_name }) => ({
+			queryEmployeeList = results.map(({ id, first_name, last_name }) => ({
+				id: id,
 				employeeName: first_name + " " + last_name,
 			}));
 		}
@@ -214,28 +215,39 @@ const updateEmployeeRole = () => {
 				choices: queryEmployeeList,
 			},
 		])
-		.then(targetEmployee => {
-            let queryRolesList;
-            db.query("SELECT * FROM role", (err, result) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    queryRolesList = results.map(({title}) => ({
-                        roleTitle: title,
-                    }));
-                }
-            })
-            inquirer
-		        .prompt([
-                    {
-                        type: "list",
-                        name: "newRole",
-                        message: "What new role would you like to give the employee?",
-                        choices: queryRolesList,
-                    },
-            ])
-            .then (newRole => {
-                
-            })
-        });
+		.then((targetEmployee) => {
+			let queryRolesList;
+			db.query("SELECT * FROM role", (err, result) => {
+				if (err) {
+					console.log(err);
+				} else {
+					queryRolesList = results.map(({ id, title }) => ({
+						roleId: id,
+						roleTitle: title,
+					}));
+				}
+			});
+			inquirer
+				.prompt([
+					{
+						type: "list",
+						name: "newRole",
+						message: "What new role would you like to give the employee?",
+						choices: queryRolesList,
+					},
+				])
+				.then((newRole) => {
+					db.query(
+						"UPDATE employee SET role_id = ? WHERE id = ?",
+						[newRole.roleId, targetEmployee.id],
+						(err, results) => {
+							if (err) {
+								console.log(err);
+							} else {
+								console.log("Employee has been updated!");
+							}
+						}
+					);
+				});
+		});
 };
