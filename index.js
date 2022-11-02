@@ -28,11 +28,11 @@ const promptList = () => {
 				choices: [
 					"View all departments",
 					"View all roles",
-					// "View all employees",
-					// "Add a department",
-					// "Add a role",
-					// "Add an employee",
-					// "Update an employee role",
+					"View all employees",
+					"Add a department",
+					"Add a role",
+					"Add an employee",
+					"Update an employee role",
 				],
 			},
 		])
@@ -45,22 +45,26 @@ const promptList = () => {
 				viewRoles();
                 console.log(2)
 			}
-            //  else if (answers.userAction === "View all employees") {
-			// 	viewEmployees();
-            //     console.log(3)
-			// } else if (answers.userAction === "Add a department") {
-			// 	addDepartment();
-            //     console.log(4)
-			// } else if (answers.userAction === "Add a role") {
-			// 	addRole();
-            //     console.log(5)
-			// } else if (answers.userAction === "Add an employee") {
-			// 	addEmployee();
-            //     console.log(6)
-			// } else if (answers.userAction === "Update an employee role") {
-			// 	updateEmployeeRole();
-            //     console.log(7)
-			// }
+            else if (answers.userAction === "View all employees") {
+				viewEmployees();
+                console.log(3)
+			} 
+            else if (answers.userAction === "Add a department") {
+				addDepartment();
+                console.log(4)
+			} 
+            else if (answers.userAction === "Add a role") {
+				addRole();
+                console.log(5)
+			} 
+            else if (answers.userAction === "Add an employee") {
+				addEmployee();
+                console.log(6)
+			} 
+            else if (answers.userAction === "Update an employee role") {
+				updateEmployeeRole();
+                console.log(7)
+			}
 		});
 };
 
