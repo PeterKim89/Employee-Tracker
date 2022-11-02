@@ -13,9 +13,14 @@ const db = mysql.createConnection(
 	console.log("Connected to Employees_db")
 );
 
+db.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected!");
+    promptList();
+})
+
 const promptList = () => {
-	return inquirer
-		.prompt([
+	return inquirer.prompt([
 			{
 				type: "list",
 				name: "userAction",
@@ -23,30 +28,39 @@ const promptList = () => {
 				choices: [
 					"View all departments",
 					"View all roles",
-					"View all employees",
-					"Add a department",
-					"Add a role",
-					"Add an employee",
-					"Update an employee role",
+					// "View all employees",
+					// "Add a department",
+					// "Add a role",
+					// "Add an employee",
+					// "Update an employee role",
 				],
 			},
 		])
 		.then((answers) => {
 			if (answers.userAction === "View all departments") {
 				viewDepartments();
-			} else if (answers.userAction === "View all roles") {
+                console.log(1)
+			} 
+            else if (answers.userAction === "View all roles") {
 				viewRoles();
-			} else if (answers.userAction === "View all employees") {
-				viewEmployees();
-			} else if (answers.userAction === "Add a department") {
-				addDepartment();
-			} else if (answers.userAction === "Add a role") {
-				addRole();
-			} else if (answers.userAction === "Add an employee") {
-				addEmployee();
-			} else if (answers.userAction === "Update an employee role") {
-				updateEmployeeRole();
+                console.log(2)
 			}
+            //  else if (answers.userAction === "View all employees") {
+			// 	viewEmployees();
+            //     console.log(3)
+			// } else if (answers.userAction === "Add a department") {
+			// 	addDepartment();
+            //     console.log(4)
+			// } else if (answers.userAction === "Add a role") {
+			// 	addRole();
+            //     console.log(5)
+			// } else if (answers.userAction === "Add an employee") {
+			// 	addEmployee();
+            //     console.log(6)
+			// } else if (answers.userAction === "Update an employee role") {
+			// 	updateEmployeeRole();
+            //     console.log(7)
+			// }
 		});
 };
 
@@ -55,7 +69,7 @@ const viewDepartments = () => {
 		if (err) {
 			console.log(err);
 		} else {
-			console.log(results);
+			console.table(results);
 			promptList();
 		}
 	});
@@ -169,3 +183,13 @@ const addEmployee = () => {
 			);
 		});
 };
+
+// const updateEmployeeRole = () => {
+
+// }
+
+// const init = async () => {
+//     await promptList();
+// }
+
+// init();
